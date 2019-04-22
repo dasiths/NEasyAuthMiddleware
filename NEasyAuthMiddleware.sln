@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEasyAuthMiddleware", "NEasyAuthMiddleware\NEasyAuthMiddleware.csproj", "{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D59F24F8-3757-4EDD-9FC7-AB3586F34484}
+	EndGlobalSection
+EndGlobal
