@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace NEasyAuthMiddleware
+namespace NEasyAuthMiddleware.Core
 {
     public class NEasyAuthOptions : AuthenticationSchemeOptions
     {

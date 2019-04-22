@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
@@ -9,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace NEasyAuthMiddleware
+namespace NEasyAuthMiddleware.Core
 {
     public class NEasyAuthAuthenticationHandler : AuthenticationHandler<NEasyAuthOptions>
     {
@@ -55,7 +54,7 @@ namespace NEasyAuthMiddleware
             if (successfulResults.Any())
             {
                 var claims = successfulResults
-                    .Select(c => c.Claim)
+                    .SelectMany(c => c.Claims)
                     .ToList();
 
                 _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace NEasyAuthMiddleware
+namespace NEasyAuthMiddleware.Core
 {
     public interface IClaimMapper
     {

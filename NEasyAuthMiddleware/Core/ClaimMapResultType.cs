@@ -1,4 +1,4 @@
-﻿namespace NEasyAuthMiddleware
+﻿namespace NEasyAuthMiddleware.Core
 {
     public enum ClaimMapResultType
     {
