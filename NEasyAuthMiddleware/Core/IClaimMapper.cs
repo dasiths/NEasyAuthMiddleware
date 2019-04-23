@@ -4,6 +4,6 @@ namespace NEasyAuthMiddleware.Core
 {
     public interface IClaimMapper
     {
-        ClaimMapResult Map(HttpContext httpContext);
+        ClaimMapResult Map(IHeaderDictionary headers);
     }
 }

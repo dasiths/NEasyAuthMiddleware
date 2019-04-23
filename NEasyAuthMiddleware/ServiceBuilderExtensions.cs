@@ -11,17 +11,17 @@ namespace NEasyAuthMiddleware
 {
     public static class ServiceBuilderExtensions
     {
-        // https://joonasw.net/view/creating-auth-scheme-in-aspnet-core-2
-
-        public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme, Action<NEasyAuthOptions> configureOptions)
+        public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme, Action<EasyAuthOptions> configureOptions)
         {
-            return builder.AddScheme<NEasyAuthOptions, NEasyAuthAuthenticationHandler>(
+            builder.Services.AddSingleton<IHeaderAccessor, HeaderAccessor>();
+            builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
+            builder.Services.AddSingleton<IPostConfigureOptions<EasyAuthOptions>, PostConfigureOptions<EasyAuthOptions>>();
+            return builder.AddScheme<EasyAuthOptions, EasyAuthAuthenticationHandler>(
                 authenticationScheme, configureOptions);
         }
 
-        public static AuthenticationBuilder AddEasyAuth(this IServiceCollection collection, Action<NEasyAuthOptions> configureOptions)
+        public static AuthenticationBuilder AddEasyAuth(this IServiceCollection collection, Action<EasyAuthOptions> configureOptions)
         {
-            collection.AddScoped<IClaimMapper, StandardPrincipalClaimMapper>();
             return collection.AddAuthentication(NEasyAuthDefaults.AuthenticationSchemeName)
                 .AddEasyAuth(NEasyAuthDefaults.AuthenticationSchemeName, configureOptions);
         }

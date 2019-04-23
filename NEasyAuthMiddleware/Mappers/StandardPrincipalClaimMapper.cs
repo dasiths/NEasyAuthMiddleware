@@ -39,12 +39,11 @@ namespace NEasyAuthMiddleware.Mappers
             _logger = logger;
         }
 
-        public ClaimMapResult Map(HttpContext httpContext)
+        public ClaimMapResult Map(IHeaderDictionary headers)
         {
             var claims = new List<Claim>();
-            var headers = httpContext.Request.Headers;
 
-            _logger.LogInformation("building claims from payload...");
+            _logger.LogInformation($"Building claims from payload in {PrincipalObjectHeader} header.");
             var xMsClientPrincipal = JsonConvert.DeserializeObject<PrincipalModel>(headers[PrincipalObjectHeader][0]);
             var claimsModels = xMsClientPrincipal.Claims;
 

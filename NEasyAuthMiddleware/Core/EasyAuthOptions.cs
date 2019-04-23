@@ -2,7 +2,7 @@
 
 namespace NEasyAuthMiddleware.Core
 {
-    public class NEasyAuthOptions : AuthenticationSchemeOptions
+    public class EasyAuthOptions : AuthenticationSchemeOptions
     {
         public string Realm { get; set; }
     }

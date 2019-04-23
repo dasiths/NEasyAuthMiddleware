@@ -10,29 +10,29 @@ using Microsoft.Extensions.Options;
 
 namespace NEasyAuthMiddleware.Core
 {
-    public class NEasyAuthAuthenticationHandler : AuthenticationHandler<NEasyAuthOptions>
+    public class EasyAuthAuthenticationHandler : AuthenticationHandler<EasyAuthOptions>
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHeaderAccessor _headerAccessor;
         private readonly IList<IClaimMapper> _claimMappers;
-        private readonly ILogger<NEasyAuthAuthenticationHandler> _logger;
+        private readonly ILogger<EasyAuthAuthenticationHandler> _logger;
 
-        public NEasyAuthAuthenticationHandler(
-            IHttpContextAccessor httpContextAccessor,
+        public EasyAuthAuthenticationHandler(
+            IHeaderAccessor headerAccessor,
             IEnumerable<IClaimMapper> claimMappers,
-            IOptionsMonitor<NEasyAuthOptions> options,
+            IOptionsMonitor<EasyAuthOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock) : base(options, logger, encoder, clock)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _headerAccessor = headerAccessor;
             _claimMappers = claimMappers.ToList();
-            _logger = logger.CreateLogger<NEasyAuthAuthenticationHandler>();
+            _logger = logger.CreateLogger<EasyAuthAuthenticationHandler>();
         }
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var allResults = _claimMappers
-                .Select(m => m.Map(_httpContextAccessor.HttpContext))
+                .Select(m => m.Map(_headerAccessor.GetHeaders()))
                 .ToList();
 
             var failedResults = allResults
@@ -45,7 +45,7 @@ namespace NEasyAuthMiddleware.Core
 
             if (failedResults.Any())
             {
-                _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} found {failedResults.Count} result(s) that have a failed status.");
+                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} found {failedResults.Count} result(s) that have a failed status.");
                 var messages = failedResults
                     .Select(c => c.ResultMessage);
                 return Task.FromResult(AuthenticateResult.Fail(string.Join("\n", messages)));
@@ -57,23 +57,23 @@ namespace NEasyAuthMiddleware.Core
                     .SelectMany(c => c.Claims)
                     .ToList();
 
-                _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");
+                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");
 
                 var identity = new ClaimsIdentity(claims);
                 var principal = new ClaimsPrincipal(identity);
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-                _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} constructed the {nameof(ClaimsPrincipal)} successfully.");
+                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} constructed the {nameof(ClaimsPrincipal)} successfully.");
                 return Task.FromResult(AuthenticateResult.Success(ticket));
             }
 
-            _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} did not find any successful results.");
+            _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} did not find any successful results.");
             return Task.FromResult(AuthenticateResult.NoResult());
         }
 
         protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            _logger.LogDebug($"{nameof(NEasyAuthAuthenticationHandler)} challenged.");
+            _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} challenged.");
             Response.Headers["WWW-Authenticate"] = $"Basic realm=\"{Options.Realm}\", charset=\"UTF-8\"";
             await base.HandleChallengeAsync(properties);
         }
