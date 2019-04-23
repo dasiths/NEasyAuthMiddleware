@@ -3,7 +3,7 @@ Azure App Service Authentication (EasyAuth) middleware for ASP.NET CORE with ful
 
 ## What is `EasyAuth`?
 
-Azure `App Service` has a feature to turn on Authentication on top of your application code. This is useful if you don't want to handle the nitty gritty of the authentication. It's meant to be a quick and easy way to put a authentication layer above an application hosted on an app service. More details can be found here https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization.
+Azure `App Service` has a feature to turn on Authentication on top of your application code. This is useful if you don't want to handle the nitty gritty of auth. It's meant to be a quick and easy way to put an authentication layer above an application hosted on an app service. More details can be found here https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization.
 
 There is a how to get started tutorial [here](https://www.benday.com/2018/05/17/walkthrough-part-2-configure-app-service-authentication-for-your-azure-web-app/).
 
@@ -19,7 +19,7 @@ To add insult to injury, when you want to debug this on your local machine, thes
 
 ## Solution
 
-NEasyAuthMiddleware does all of this complicated logic for you and keeps your authentication concerns simple. It hydrates the `HttpContext.User` by registering a custom authentication handler. To make things easier when running locally, it even has the ability to use a json file to load mocked claims.
+NEasyAuthMiddleware does all of this complicated logic for you and keeps your authentication concerns simple. It hydrates the `HttpContext.User` by registering a custom authentication handler. To make things easier when running locally, it even has the ability to use a `json` file to load mocked claims.
 
 ## Using it
 
