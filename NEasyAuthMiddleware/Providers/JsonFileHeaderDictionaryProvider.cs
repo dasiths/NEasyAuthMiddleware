@@ -12,12 +12,12 @@ using NEasyAuthMiddleware.Models;
 
 namespace NEasyAuthMiddleware.Providers
 {
-    public class JsonProvider : IHeaderDictionaryProvider
+    public class JsonFileHeaderDictionaryProvider : IHeaderDictionaryProvider
     {
         private readonly JsonProviderOptions _jsonProviderOptions;
-        private readonly ILogger<JsonProvider> _logger;
+        private readonly ILogger<JsonFileHeaderDictionaryProvider> _logger;
 
-        public JsonProvider(JsonProviderOptions jsonProviderOptions, ILogger<JsonProvider> logger)
+        public JsonFileHeaderDictionaryProvider(JsonProviderOptions jsonProviderOptions, ILogger<JsonFileHeaderDictionaryProvider> logger)
         {
             _jsonProviderOptions = jsonProviderOptions;
             _logger = logger;

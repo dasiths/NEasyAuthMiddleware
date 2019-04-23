@@ -10,7 +10,7 @@ namespace NEasyAuthMiddleware
     {
         public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme)
         {
-            builder.Services.AddSingleton<IHeaderDictionaryProvider, HttpContextProvider>();
+            builder.Services.AddSingleton<IHeaderDictionaryProvider, HttpContextHeaderDictionaryProvider>();
             builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
             return builder.AddScheme<EasyAuthOptions, EasyAuthAuthenticationHandler>(
                 authenticationScheme, _ => {});
@@ -28,7 +28,7 @@ namespace NEasyAuthMiddleware
             {
                 JsonFilePath = fileName
             });
-            collection.AddSingleton<IHeaderDictionaryProvider, JsonProvider>();
+            collection.AddSingleton<IHeaderDictionaryProvider, JsonFileHeaderDictionaryProvider>();
         }
     }
 }

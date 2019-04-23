@@ -2,11 +2,11 @@
 
 namespace NEasyAuthMiddleware.Providers
 {
-    public class HttpContextProvider : IHeaderDictionaryProvider
+    public class HttpContextHeaderDictionaryProvider : IHeaderDictionaryProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HttpContextProvider(IHttpContextAccessor httpContextAccessor)
+        public HttpContextHeaderDictionaryProvider(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
