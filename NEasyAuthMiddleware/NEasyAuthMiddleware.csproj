@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Dasith Wijesiriwardena</Authors>
+    <Copyright>2019</Copyright>
+    <PackageLicenseUrl>https://github.com/dasiths/NEasyAuthMiddleware/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/dasiths/NEasyAuthMiddleware</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dasiths/NEasyAuthMiddleware</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>appservice easyauth authentication aspnetcore middleware</PackageTags>
+    <Description>Azure App Service Authentication (EasyAuth) middleware for ASP.NET CORE with fully customizable components with support for local debugging</Description>
   </PropertyGroup>
 
   <ItemGroup>
