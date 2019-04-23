@@ -7,30 +7,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NEasyAuthMiddleware.Core;
+using NEasyAuthMiddleware.Models;
+using NEasyAuthMiddleware.Providers;
 
 namespace NEasyAuthMiddleware.Mappers
 {
     public class StandardPrincipalClaimMapper : IClaimMapper
     {
-        private class ClaimModel
-        {
-            [JsonProperty("typ")]
-            public string Type { get; set; }
-
-            [JsonProperty("val")]
-            public string Value { get; set; }
-        }
-
-        private class PrincipalModel
-        {
-            [JsonProperty("claims")]
-            public ClaimModel[] Claims { get; set; }
-        }
-
-        private const string PrincipalObjectHeader = "X-MS-CLIENT-PRINCIPAL";
-        private const string PrincipalNameHeader = "X-MS-CLIENT-PRINCIPAL-NAME";
-        private const string PrincipalIdpHeaderName = "X-MS-CLIENT-PRINCIPAL-IDP";
-
         private readonly ILogger<StandardPrincipalClaimMapper> _logger;
 
         public StandardPrincipalClaimMapper(ILogger<StandardPrincipalClaimMapper> logger)
@@ -40,14 +23,14 @@ namespace NEasyAuthMiddleware.Mappers
 
         public ClaimMapResult Map(IHeaderDictionary headers)
         {
-            if (!string.IsNullOrEmpty(headers[PrincipalObjectHeader]))
+            if (!string.IsNullOrEmpty(headers[HeaderConstants.PrincipalObjectHeader]))
             {
                 var claims = new List<Claim>();
-                _logger.LogInformation($"Building claims from payload in {PrincipalObjectHeader} header.");
+                _logger.LogInformation($"Building claims from payload in {HeaderConstants.PrincipalObjectHeader} header.");
                 try
                 {
-                    var payload = Encoding.UTF8.GetString(Convert.FromBase64String(headers[PrincipalObjectHeader][0]));
-                    var xMsClientPrincipal = JsonConvert.DeserializeObject<PrincipalModel>(payload);
+                    var payload = Encoding.UTF8.GetString(Convert.FromBase64String(headers[HeaderConstants.PrincipalObjectHeader][0]));
+                    var xMsClientPrincipal = JsonConvert.DeserializeObject<HeaderPrincipalModel>(payload);
                     var claimsModels = xMsClientPrincipal.Claims;
 
                     foreach (var claimsModel in claimsModels)
@@ -70,7 +53,7 @@ namespace NEasyAuthMiddleware.Mappers
                 }
             }
 
-            return ClaimMapResult.Fail($"{PrincipalObjectHeader} header was not present or in the expected format.");
+            return ClaimMapResult.Fail($"{HeaderConstants.PrincipalObjectHeader} header was not present or in the expected format.");
         }
     }
 }

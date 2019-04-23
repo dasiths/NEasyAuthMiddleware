@@ -1,0 +1,61 @@
+[
+  {
+    "id_token": "blah",
+    "provider_name": "aad",
+    "user_claims": [
+      {
+        "typ": "aud",
+        "val": "3ff79f07-f16c-47b4-bf2d-0715494f0880"
+      },
+      {
+        "typ": "iss",
+        "val": "https:\/\/sts.windows.net\/11051c2a-fb4f-49d5-a862-2ac9a54e74e2\/"
+      },
+     {
+        "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/emailaddress",
+        "val": "dasith.wijes@mydomain.com"
+      },
+      {
+        "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/surname",
+        "val": "Wijes"
+      },
+      {
+        "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/givenname",
+        "val": "Dasith"
+      },
+      {
+        "typ": "http:\/\/schemas.microsoft.com\/identity\/claims\/identityprovider",
+        "val": "https:\/\/sts.windows.net\/413504eb-8622-47d2-aa72-ddbba4584471\/"
+      },
+      {
+        "typ": "name",
+        "val": "Dasith Wijes"
+      },
+      {
+        "typ": "http:\/\/schemas.microsoft.com\/identity\/claims\/objectidentifier",
+        "val": "6ebb5597-d9cb-4981-98eb-72d7155316f7"
+      },
+      {
+        "typ": "roles",
+        "val": "Resource.Read"
+      },
+      {
+        "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/nameidentifier",
+        "val": "qhZivK74saPZn4Nnb95O6OL-IDnE78a14trOZehSuvg"
+      },
+      {
+        "typ": "http:\/\/schemas.microsoft.com\/identity\/claims\/tenantid",
+        "val": "11051c2a-fb4f-49d5-a862-2ac9a54e74e2"
+      },
+      {
+        "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/name",
+        "val": "dasith.wijes@mydomain.com"
+      },
+      {
+        "typ": "ver",
+        "val": "1.0"
+      }
+    ],
+    "user_id": "dasith.wijes@mydomain.com"
+  }
+]

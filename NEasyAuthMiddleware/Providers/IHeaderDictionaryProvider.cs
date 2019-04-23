@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace NEasyAuthMiddleware.Core
+namespace NEasyAuthMiddleware.Providers
 {
-    public interface IHeaderAccessor
+    public interface IHeaderDictionaryProvider
     {
         IHeaderDictionary GetHeaders();
     }

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace NEasyAuthMiddleware.Core
+namespace NEasyAuthMiddleware.Providers
 {
-    public class HeaderAccessor : IHeaderAccessor
+    public class HttpContextProvider : IHeaderDictionaryProvider
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HeaderAccessor(IHttpContextAccessor httpContextAccessor)
+        public HttpContextProvider(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

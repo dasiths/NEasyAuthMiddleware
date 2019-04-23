@@ -18,4 +18,10 @@
     <ProjectReference Include="..\NEasyAuthMiddleware\NEasyAuthMiddleware.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="mock_user.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
