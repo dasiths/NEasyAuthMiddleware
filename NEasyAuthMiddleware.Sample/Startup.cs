@@ -26,9 +26,9 @@ namespace NEasyAuthMiddleware.Sample
             services.AddHttpContextAccessor();
             services.AddEasyAuth();
 
-            if (_hostingEnvironment.IsDevelopment())
+            if (_hostingEnvironment.IsDevelopment()) // Use the mock json file when not running in an app service
             {
-                var mockFile = $"{_hostingEnvironment.ContentRootPath}/mock_user.json";
+                var mockFile = $"{_hostingEnvironment.ContentRootPath}\\mock_user.json";
                 services.UseJsonFileToMockEasyAuth(mockFile);
             }
         }
