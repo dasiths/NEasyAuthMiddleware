@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -43,25 +44,33 @@ namespace NEasyAuthMiddleware.Mappers
             {
                 var claims = new List<Claim>();
                 _logger.LogInformation($"Building claims from payload in {PrincipalObjectHeader} header.");
-                var xMsClientPrincipal = JsonConvert.DeserializeObject<PrincipalModel>(headers[PrincipalObjectHeader][0]);
-                var claimsModels = xMsClientPrincipal.Claims;
-
-                foreach (var claimsModel in claimsModels)
+                try
                 {
-                    var claimType = claimsModel.Type;
-                    if (claimsModel.Type.Equals("roles", StringComparison.OrdinalIgnoreCase))
+                    var payload = Encoding.UTF8.GetString(Convert.FromBase64String(headers[PrincipalObjectHeader][0]));
+                    var xMsClientPrincipal = JsonConvert.DeserializeObject<PrincipalModel>(payload);
+                    var claimsModels = xMsClientPrincipal.Claims;
+
+                    foreach (var claimsModel in claimsModels)
                     {
-                        claimType = ClaimTypes.Role;
+                        var claimType = claimsModel.Type;
+                        if (claimsModel.Type.Equals("roles", StringComparison.OrdinalIgnoreCase))
+                        {
+                            claimType = ClaimTypes.Role;
+                        }
+
+                        claims.AddRange(claimsModel.Value.Split(',')
+                            .Select(c => new Claim(claimType, c)));
                     }
 
-                    claims.AddRange(claimsModel.Value.Split(',')
-                        .Select(c => new Claim(claimType, c)));
+                    return ClaimMapResult.Success(claims);
                 }
-
-                return ClaimMapResult.Success(claims);
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Building claims from header failed");
+                }
             }
 
-            return ClaimMapResult.Fail($"{PrincipalObjectHeader} header was not present.");
+            return ClaimMapResult.Fail($"{PrincipalObjectHeader} header was not present or in the expected format.");
         }
     }
 }
