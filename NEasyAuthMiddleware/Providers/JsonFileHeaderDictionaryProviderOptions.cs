@@ -1,6 +1,6 @@
 ﻿namespace NEasyAuthMiddleware.Providers
 {
-    public class JsonProviderOptions
+    public class JsonFileHeaderDictionaryProviderOptions
     {
         public string JsonFilePath { get; set; }
     }

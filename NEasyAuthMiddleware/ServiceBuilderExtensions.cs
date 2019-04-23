@@ -24,7 +24,7 @@ namespace NEasyAuthMiddleware
 
         public static void UseJsonFileToMockEasyAuth(this IServiceCollection collection, string fileName)
         {
-            collection.AddSingleton(provider => new JsonProviderOptions()
+            collection.AddSingleton(provider => new JsonFileHeaderDictionaryProviderOptions()
             {
                 JsonFilePath = fileName
             });

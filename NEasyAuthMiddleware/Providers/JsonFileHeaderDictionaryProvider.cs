@@ -14,20 +14,20 @@ namespace NEasyAuthMiddleware.Providers
 {
     public class JsonFileHeaderDictionaryProvider : IHeaderDictionaryProvider
     {
-        private readonly JsonProviderOptions _jsonProviderOptions;
+        private readonly JsonFileHeaderDictionaryProviderOptions _jsonFileHeaderDictionaryProviderOptions;
         private readonly ILogger<JsonFileHeaderDictionaryProvider> _logger;
 
-        public JsonFileHeaderDictionaryProvider(JsonProviderOptions jsonProviderOptions, ILogger<JsonFileHeaderDictionaryProvider> logger)
+        public JsonFileHeaderDictionaryProvider(JsonFileHeaderDictionaryProviderOptions jsonFileHeaderDictionaryProviderOptions, ILogger<JsonFileHeaderDictionaryProvider> logger)
         {
-            _jsonProviderOptions = jsonProviderOptions;
+            _jsonFileHeaderDictionaryProviderOptions = jsonFileHeaderDictionaryProviderOptions;
             _logger = logger;
         }
 
         public IHeaderDictionary GetHeaders()
         {
             var headerDictionary = new HeaderDictionary();
-            var contents = File.ReadAllText(_jsonProviderOptions.JsonFilePath);
-            _logger.LogDebug($"Reading claims in file: {_jsonProviderOptions.JsonFilePath}");
+            var contents = File.ReadAllText(_jsonFileHeaderDictionaryProviderOptions.JsonFilePath);
+            _logger.LogDebug($"Reading claims in file: {_jsonFileHeaderDictionaryProviderOptions.JsonFilePath}");
 
             var payload = JsonConvert.DeserializeObject<AuthMeJsonPrincipalModel[]>(contents);
 
