@@ -7,33 +7,43 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using NEasyAuthMiddleware.Providers;
 
 namespace NEasyAuthMiddleware.Core
 {
     public class EasyAuthAuthenticationHandler : AuthenticationHandler<EasyAuthOptions>
     {
-        private readonly IHeaderDictionaryProvider _headerDictionaryProvider;
+        private readonly IList<IHeaderDictionaryProvider> _headerDictionaryProviders;
         private readonly IList<IClaimMapper> _claimMappers;
         private readonly ILogger<EasyAuthAuthenticationHandler> _logger;
 
         public EasyAuthAuthenticationHandler(
-            IHeaderDictionaryProvider headerDictionaryProvider,
+            IEnumerable<IHeaderDictionaryProvider> headerDictionaryProviders,
             IEnumerable<IClaimMapper> claimMappers,
             IOptionsMonitor<EasyAuthOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock) : base(options, logger, encoder, clock)
         {
-            _headerDictionaryProvider = headerDictionaryProvider;
+            _headerDictionaryProviders = headerDictionaryProviders.ToList();
             _claimMappers = claimMappers.ToList();
             _logger = logger.CreateLogger<EasyAuthAuthenticationHandler>();
         }
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            var allHeaders = _headerDictionaryProviders
+                .SelectMany(p => p.GetHeaders())
+                .Aggregate(new HeaderDictionary(),
+                (dictionary, pair) =>
+                {
+                    dictionary.Add(pair);
+                    return dictionary;
+                });
+
             var allResults = _claimMappers
-                .Select(m => m.Map(_headerDictionaryProvider.GetHeaders()))
+                .Select(m => m.Map(allHeaders))
                 .ToList();
 
             var failedResults = allResults
