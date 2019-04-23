@@ -70,12 +70,5 @@ namespace NEasyAuthMiddleware.Core
             _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} did not find any successful results.");
             return Task.FromResult(AuthenticateResult.NoResult());
         }
-
-        protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
-        {
-            _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} challenged.");
-            Response.Headers["WWW-Authenticate"] = $"Basic realm=\"{Options.Realm}\", charset=\"UTF-8\"";
-            await base.HandleChallengeAsync(properties);
-        }
     }
 }

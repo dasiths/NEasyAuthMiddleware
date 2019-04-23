@@ -11,19 +11,18 @@ namespace NEasyAuthMiddleware
 {
     public static class ServiceBuilderExtensions
     {
-        public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme, Action<EasyAuthOptions> configureOptions)
+        public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme)
         {
             builder.Services.AddSingleton<IHeaderAccessor, HeaderAccessor>();
             builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
-            builder.Services.AddSingleton<IPostConfigureOptions<EasyAuthOptions>, PostConfigureOptions<EasyAuthOptions>>();
             return builder.AddScheme<EasyAuthOptions, EasyAuthAuthenticationHandler>(
-                authenticationScheme, configureOptions);
+                authenticationScheme, _ => {});
         }
 
-        public static AuthenticationBuilder AddEasyAuth(this IServiceCollection collection, Action<EasyAuthOptions> configureOptions)
+        public static AuthenticationBuilder AddEasyAuth(this IServiceCollection collection)
         {
             return collection.AddAuthentication(NEasyAuthDefaults.AuthenticationSchemeName)
-                .AddEasyAuth(NEasyAuthDefaults.AuthenticationSchemeName, configureOptions);
+                .AddEasyAuth(NEasyAuthDefaults.AuthenticationSchemeName);
         }
     }
 }
