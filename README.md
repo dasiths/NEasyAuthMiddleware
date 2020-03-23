@@ -1,4 +1,5 @@
-# NEasyAuthMiddleware  [![Build status](https://ci.appveyor.com/api/projects/status/5e9kb8rd3egstvkb?svg=true)](https://ci.appveyor.com/project/dasiths/neasyauthmiddleware) [![NuGet](https://img.shields.io/nuget/v/NEasyAuthMiddleware.svg)](https://www.nuget.org/packages/NEasyAuthMiddleware) 
+# NEasyAuthMiddleware  [![Build status](https://ci.appveyor.com/api/projects/status/5e9kb8rd3egstvkb?svg=true)](https://ci.appveyor.com/project/dasiths/neasyauthmiddleware) [![NuGet](https://img.shields.io/nuget/v/NEasyAuthMiddleware.svg)](https://www.nuget.org/packages/NEasyAuthMiddleware) [![Downloads](https://img.shields.io/nuget/dt/NEasyAuthMiddleware.svg)](https://www.nuget.org/packages/NEasyAuthMiddleware/)
+
 Azure App Service Authentication (EasyAuth) middleware for ASP.NET CORE with fully customizable components with support for local debugging.
 
 ## What is `EasyAuth`?
