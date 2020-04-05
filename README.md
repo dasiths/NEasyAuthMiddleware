@@ -80,7 +80,7 @@ If you require mutating the `HeaderDictionary` prior to being consumed by the ma
 
 If you want to filter or mutate the mapped claims prior to being part of a `ClaimsIdentity`, implement the `IClaimsTransformer` interface and register it in your DI container.
 
-```charp
+```csharp
     public interface IClaimsTransformer
     {
         List<Claim> Transform(List<Claim> claims);
