@@ -27,7 +27,7 @@ namespace NEasyAuthMiddleware.Providers
         {
             var headerDictionary = new HeaderDictionary();
             var contents = File.ReadAllText(_jsonFileHeaderDictionaryProviderOptions.JsonFilePath);
-            _logger.LogDebug($"Reading claims in file: {_jsonFileHeaderDictionaryProviderOptions.JsonFilePath}");
+            _logger.LogTrace($"Reading claims in file: {_jsonFileHeaderDictionaryProviderOptions.JsonFilePath}");
 
             var payload = JsonConvert.DeserializeObject<AuthMeJsonPrincipalModel[]>(contents);
 
@@ -45,7 +45,7 @@ namespace NEasyAuthMiddleware.Providers
                 var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
                 headerDictionary.Add(new KeyValuePair<string, StringValues>(HeaderConstants.PrincipalObjectHeader, encodedString));
 
-                _logger.LogDebug($"Found {result.Claims.Length} claims in file.");
+                _logger.LogTrace($"Found {result.Claims.Length} claims in file.");
             }
 
             return headerDictionary;

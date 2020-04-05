@@ -60,12 +60,30 @@ See the [sample app](https://github.com/dasiths/NEasyAuthMiddleware/tree/master/
 
 ## Customizing it
 
-The library already maps most of the claims coming in the http headers. If you find a custom header that you would like to map to the claims of the current user, all you have to do is implement the interface below and register it in your DI container.
+The library already maps most of the claims coming in the http headers. If you find a custom header that you would like to map to the claims of the current user, all you have to do is implement the `IClaimMapper` interface below and register it in your DI container.
 
 ```csharp
     public interface IClaimMapper
     {
         ClaimMapResult Map(IHeaderDictionary headers);
+    }
+```
+
+If you require mutating the `HeaderDictionary` prior to being consumed by the mappers, implement the `IHeaderDictionaryTransformer` interface and register it in your DI container.
+
+```csharp
+    public interface IHeaderDictionaryTransformer
+    {
+        HeaderDictionary Transform(HeaderDictionary headerDictionary);
+    }
+```
+
+If you want to filter or mutate the mapped claims prior to being part of a `ClaimsIdentity`, implement the `IClaimsTransformer` interface and register it in your DI container.
+
+```charp
+    public interface IClaimsTransformer
+    {
+        List<Claim> Transform(List<Claim> claims);
     }
 ```
 

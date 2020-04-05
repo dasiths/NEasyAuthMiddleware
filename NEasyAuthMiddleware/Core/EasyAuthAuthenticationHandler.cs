@@ -16,16 +16,21 @@ namespace NEasyAuthMiddleware.Core
     {
         private readonly IList<IHeaderDictionaryProvider> _headerDictionaryProviders;
         private readonly IList<IClaimMapper> _claimMappers;
+        private readonly IList<IClaimsTransformer> _claimsTransformers;
+        private readonly IList<IHeaderDictionaryTransformer> _headerDictionaryTransformers;
         private readonly ILogger<EasyAuthAuthenticationHandler> _logger;
 
-        public EasyAuthAuthenticationHandler(
-            IEnumerable<IHeaderDictionaryProvider> headerDictionaryProviders,
+        public EasyAuthAuthenticationHandler(IEnumerable<IHeaderDictionaryProvider> headerDictionaryProviders,
+            IEnumerable<IHeaderDictionaryTransformer> headerDictionaryTransformers,
             IEnumerable<IClaimMapper> claimMappers,
+            IEnumerable<IClaimsTransformer> claimsTransformers,
             IOptionsMonitor<EasyAuthOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock) : base(options, logger, encoder, clock)
         {
+            _claimsTransformers = claimsTransformers.ToList();
+            _headerDictionaryTransformers = headerDictionaryTransformers.ToList();
             _headerDictionaryProviders = headerDictionaryProviders.ToList();
             _claimMappers = claimMappers.ToList();
             _logger = logger.CreateLogger<EasyAuthAuthenticationHandler>();
@@ -42,6 +47,11 @@ namespace NEasyAuthMiddleware.Core
                     return dictionary;
                 });
 
+            allHeaders =
+                _headerDictionaryTransformers
+                    .Reverse()
+                    .Aggregate(allHeaders, (hd, t) => t.Transform(hd));
+
             var allResults = _claimMappers
                 .Select(m => m.Map(allHeaders))
                 .ToList();
@@ -56,7 +66,7 @@ namespace NEasyAuthMiddleware.Core
 
             if (failedResults.Any())
             {
-                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} found {failedResults.Count} result(s) that have a failed status.");
+                _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} found {failedResults.Count} result(s) that have a failed status.");
                 var messages = failedResults
                     .Select(c => c.ResultMessage);
                 return Task.FromResult(AuthenticateResult.Fail(string.Join("\n", messages)));
@@ -68,17 +78,21 @@ namespace NEasyAuthMiddleware.Core
                     .SelectMany(c => c.Claims)
                     .ToList();
 
-                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");
+                claims = _claimsTransformers
+                    .Reverse()
+                    .Aggregate(claims, (c, t) => t.Transform(c));
+
+                _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");
 
                 var identity = new ClaimsIdentity(claims);
                 var principal = new ClaimsPrincipal(identity);
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-                _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} constructed the {nameof(ClaimsPrincipal)} successfully.");
+                _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} constructed the {nameof(ClaimsPrincipal)} successfully.");
                 return Task.FromResult(AuthenticateResult.Success(ticket));
             }
 
-            _logger.LogDebug($"{nameof(EasyAuthAuthenticationHandler)} did not find any successful results.");
+            _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} did not find any successful results.");
             return Task.FromResult(AuthenticateResult.NoResult());
         }
     }

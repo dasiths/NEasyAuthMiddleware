@@ -11,7 +11,7 @@
         "typ": "iss",
         "val": "https:\/\/sts.windows.net\/11051c2a-fb4f-49d5-a862-2ac9a54e74e2\/"
       },
-     {
+      {
         "typ": "http:\/\/schemas.xmlsoap.org\/ws\/2005\/05\/identity\/claims\/emailaddress",
         "val": "dasith.wijes@mydomain.com"
       },
@@ -29,7 +29,7 @@
       },
       {
         "typ": "name",
-        "val": "Dasith Wijes"
+        "val": "Dasith, Wijes"
       },
       {
         "typ": "http:\/\/schemas.microsoft.com\/identity\/claims\/objectidentifier",

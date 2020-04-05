@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +23,11 @@ namespace NEasyAuthMiddleware.Sample
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpContextAccessor();
-            services.AddEasyAuth();
+            services.AddEasyAuth(options =>
+            {
+                options.ClaimTypesWithCommaSeparatedValues.Add("some-claim-type");
+                options.IgnoreClaimTypes.Add("ignored-claim-type");
+            });
 
             if (HostingEnvironment.IsDevelopment()) // Use the mock json file when not running in an app service
             {
@@ -32,7 +35,9 @@ namespace NEasyAuthMiddleware.Sample
                 services.UseJsonFileToMockEasyAuth(mockFile);
             }
 
-            services.AddSingleton<IClaimMapper, CustomHeaderClaimMapper>(); // register custom header mapper
+            services.AddSingleton<IHeaderDictionaryTransformer, CustomHeaderDictionaryTransformer>(); // register custom header dictionary transformer
+            services.AddSingleton<IClaimMapper, CustomClaimMapper>(); // register custom header mapper
+            services.AddSingleton<IClaimsTransformer, CustomClaimsTransformer>(); // register custom claims transformer
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
