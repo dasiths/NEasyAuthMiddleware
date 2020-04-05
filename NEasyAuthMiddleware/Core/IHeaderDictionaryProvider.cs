@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace NEasyAuthMiddleware.Providers
+namespace NEasyAuthMiddleware.Core
 {
     public interface IHeaderDictionaryProvider
     {

@@ -7,6 +7,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
+using NEasyAuthMiddleware.Constants;
+using NEasyAuthMiddleware.Core;
 using Newtonsoft.Json;
 using NEasyAuthMiddleware.Models;
 
@@ -34,7 +36,7 @@ namespace NEasyAuthMiddleware.Providers
             if (payload.Any())
             {
                 var target = payload.First();
-                var result = new HeaderPrincipalModel()
+                var result = new EasyAuthHeaderPrincipalModel()
                 {
                     AuthenticationType = target.AuthenticationType,
                     NameClaimType = ClaimTypes.Name,
@@ -43,7 +45,7 @@ namespace NEasyAuthMiddleware.Providers
                 };
                 var json = JsonConvert.SerializeObject(result);
                 var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
-                headerDictionary.Add(new KeyValuePair<string, StringValues>(HeaderConstants.PrincipalObjectHeader, encodedString));
+                headerDictionary.Add(new KeyValuePair<string, StringValues>(KnownEasyAuthHeaders.PrincipalObjectHeader, encodedString));
 
                 _logger.LogTrace($"Found {result.Claims.Length} claims in file.");
             }

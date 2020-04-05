@@ -2,7 +2,7 @@
 
 namespace NEasyAuthMiddleware.Models
 {
-    public class HeaderPrincipalModel
+    public class EasyAuthHeaderPrincipalModel
     {
         [JsonProperty("auth_typ")]
         public string AuthenticationType { get; set; }

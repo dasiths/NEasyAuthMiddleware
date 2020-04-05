@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication;
+using NEasyAuthMiddleware.Constants;
 
 namespace NEasyAuthMiddleware.Core
 {

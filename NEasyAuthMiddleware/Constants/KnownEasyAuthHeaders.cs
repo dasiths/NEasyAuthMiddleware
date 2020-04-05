@@ -1,6 +1,6 @@
-﻿namespace NEasyAuthMiddleware.Providers
+﻿namespace NEasyAuthMiddleware.Constants
 {
-    public static class HeaderConstants
+    public static class KnownEasyAuthHeaders
     {
         public const string PrincipalObjectHeader = "X-MS-CLIENT-PRINCIPAL";
         public const string PrincipalNameHeader = "X-MS-CLIENT-PRINCIPAL-NAME";

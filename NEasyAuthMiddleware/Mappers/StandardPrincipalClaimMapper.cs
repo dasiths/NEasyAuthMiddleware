@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NEasyAuthMiddleware.Constants;
 using Newtonsoft.Json;
 using NEasyAuthMiddleware.Core;
 using NEasyAuthMiddleware.Models;
@@ -26,16 +27,16 @@ namespace NEasyAuthMiddleware.Mappers
 
         public ClaimMapResult Map(IHeaderDictionary headers)
         {
-            if (!string.IsNullOrEmpty(headers[HeaderConstants.PrincipalObjectHeader]))
+            if (!string.IsNullOrEmpty(headers[KnownEasyAuthHeaders.PrincipalObjectHeader]))
             {
                 var claims = new List<Claim>();
-                _logger.LogTrace($"Building claims from payload in {HeaderConstants.PrincipalObjectHeader} header.");
+                _logger.LogTrace($"Building claims from payload in {KnownEasyAuthHeaders.PrincipalObjectHeader} header.");
 
                 try
                 {
-                    var headerValue = headers[HeaderConstants.PrincipalObjectHeader].First();
+                    var headerValue = headers[KnownEasyAuthHeaders.PrincipalObjectHeader].First();
                     var payload = Encoding.UTF8.GetString(Convert.FromBase64String(headerValue));
-                    var headerPrincipalModel = JsonConvert.DeserializeObject<HeaderPrincipalModel>(payload);
+                    var headerPrincipalModel = JsonConvert.DeserializeObject<EasyAuthHeaderPrincipalModel>(payload);
 
                     var config = _easyAuthOptions.Value;
 
@@ -86,7 +87,7 @@ namespace NEasyAuthMiddleware.Mappers
                 }
             }
 
-            return ClaimMapResult.Fail($"{HeaderConstants.PrincipalObjectHeader} header was not present or in the expected format.");
+            return ClaimMapResult.Fail($"{KnownEasyAuthHeaders.PrincipalObjectHeader} header was not present or in the expected format.");
         }
     }
 }

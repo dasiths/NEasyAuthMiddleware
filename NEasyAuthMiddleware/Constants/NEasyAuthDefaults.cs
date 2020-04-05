@@ -1,4 +1,4 @@
-﻿namespace NEasyAuthMiddleware.Core
+﻿namespace NEasyAuthMiddleware.Constants
 {
     public static class NEasyAuthDefaults
     {

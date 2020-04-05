@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NEasyAuthMiddleware.Core
+﻿namespace NEasyAuthMiddleware.Constants
 {
     public static class KnownEasyAuthClaimAliases
     {

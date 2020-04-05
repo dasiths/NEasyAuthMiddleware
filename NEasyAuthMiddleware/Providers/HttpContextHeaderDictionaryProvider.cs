@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using NEasyAuthMiddleware.Core;
 
 namespace NEasyAuthMiddleware.Providers
 {

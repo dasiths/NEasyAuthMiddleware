@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
+using NEasyAuthMiddleware.Constants;
 using NEasyAuthMiddleware.Core;
 using NEasyAuthMiddleware.Mappers;
 using NEasyAuthMiddleware.Providers;
@@ -14,13 +15,13 @@ namespace NEasyAuthMiddleware
             builder.Services.AddSingleton<IHeaderDictionaryProvider, HttpContextHeaderDictionaryProvider>();
             builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
 
-            if (configure != null)
+            if (configure == null)
             {
-                builder.Services.Configure<EasyAuthOptions>(configure);
+                configure = _ => { };
             }
 
             return builder.AddScheme<EasyAuthOptions, EasyAuthAuthenticationHandler>(
-                authenticationScheme, _ => {});
+                authenticationScheme, configure);
         }
 
         public static AuthenticationBuilder AddEasyAuth(this IServiceCollection collection, Action<EasyAuthOptions> configure = null)
