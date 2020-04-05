@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using NEasyAuthMiddleware.Core;
@@ -9,9 +10,21 @@ namespace NEasyAuthMiddleware.Sample
     {
         public List<Claim> Transform(List<Claim> claims)
         {
-            // remove the gender claim if it's the default
-            return claims.Where(c => !(c.Type == ClaimTypes.Gender && 
-                                     c.Value == CustomHeaderDictionaryTransformer.HeaderDefaultValue)).ToList();
+            var filteredClaims = claims.Where(c => c.Type != ClaimTypes.System).ToList();
+
+            if (claims.Any(c => c.Type == ClaimTypes.System 
+                                && c.Value.IndexOf("chrome", StringComparison.OrdinalIgnoreCase) > -1))
+            {
+                filteredClaims.Add(new Claim(ClaimTypes.System, "Google Chrome"));
+            }
+
+            if (claims.Any(c => c.Type == ClaimTypes.System
+                                && c.Value.IndexOf("windows", StringComparison.OrdinalIgnoreCase) > -1))
+            {
+                filteredClaims.Add(new Claim(ClaimTypes.System, "Microsoft Windows"));
+            }
+
+            return filteredClaims;
         }
     }
 }

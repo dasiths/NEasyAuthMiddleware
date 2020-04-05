@@ -7,15 +7,14 @@ namespace NEasyAuthMiddleware.Sample
 {
     public class CustomHeaderDictionaryTransformer: IHeaderDictionaryTransformer
     {
-        public const string HeaderName = "x-user-gender";
-        public const string HeaderDefaultValue = "Not Provided";
+        public const string HeaderName = "User-Agent";
 
         public HeaderDictionary Transform(HeaderDictionary headerDictionary)
         {
             if (!headerDictionary.ContainsKey(HeaderName))
             {
-                // adding default gender
-                headerDictionary.Add(HeaderName, (new Random()).Next(100) > 50 ? HeaderDefaultValue : "NonBinary");
+                // adding default value
+                headerDictionary.Add(HeaderName, "Google Chrome on Windows");
             }
 
             return headerDictionary;
