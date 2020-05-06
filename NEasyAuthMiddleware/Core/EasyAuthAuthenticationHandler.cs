@@ -84,7 +84,7 @@ namespace NEasyAuthMiddleware.Core
 
                 _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} found {claims.Count} successful result(s) and mapped them to claims.");
 
-                var identity = new ClaimsIdentity(claims);
+                var identity = new ClaimsIdentity(claims, "EasyAuth");
                 var principal = new ClaimsPrincipal(identity);
                 var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
