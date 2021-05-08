@@ -24,6 +24,15 @@ NEasyAuthMiddleware does all of this complicated logic for you and keeps your au
 
 ## Using it
 
+- Version 1.X targets AspNet Core 2.x
+- Version 2.X targets AspNet Core 3.x
+
+Install the package using NuGet Package Manager Console
+
+```
+Install-Package NEasyAuthMiddleware
+```
+
 Just add the following to your `Startup.cs`
 
 ```csharp
@@ -42,7 +51,16 @@ Just add the following to your `Startup.cs`
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseAuthentication();
+            app.UseAuthentication(); // Indicate we are using the Authenticaiton middleware
+            app.UseRouting();
+            app.UseAuthorization(); // This has to come between routing and endoints
+
+            app.UseEndpoints(endpoints =>
+            {
+                // Your endpoints are defined here
+                endpoints.MapControllers();
+                endpoints.MapRazorPages();
+            });
         }
 ```
 
@@ -69,12 +87,12 @@ The library already maps most of the claims coming in the http headers. If you f
     }
 ```
 
-If you require mutating the `HeaderDictionary` prior to being consumed by the mappers, implement the `IHeaderDictionaryTransformer` interface and register it in your DI container.
+If you require mutating the `IHeaderDictionary` prior to being consumed by the mappers, implement the `IHeaderDictionaryTransformer` interface and register it in your DI container.
 
 ```csharp
     public interface IHeaderDictionaryTransformer
     {
-        HeaderDictionary Transform(HeaderDictionary headerDictionary);
+        IHeaderDictionary Transform(IHeaderDictionary headerDictionary);
     }
 ```
 

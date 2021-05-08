@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace NEasyAuthMiddleware.Models
 {
     public class EasyAuthHeaderPrincipalModel
     {
-        [JsonProperty("auth_typ")]
+        [JsonPropertyName("auth_typ")]
         public string AuthenticationType { get; set; }
 
-        [JsonProperty("name_typ")]
+        [JsonPropertyName("name_typ")]
         public string NameClaimType { get; set; }
 
-        [JsonProperty("role_typ")]
+        [JsonPropertyName("role_typ")]
         public string RoleClaimType { get; set; }
 
-        [JsonProperty("claims")]
+        [JsonPropertyName("claims")]
         public ClaimModel[] Claims { get; set; }
     }
 }

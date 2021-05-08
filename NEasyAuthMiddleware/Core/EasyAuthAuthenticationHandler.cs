@@ -40,7 +40,7 @@ namespace NEasyAuthMiddleware.Core
         {
             var allHeaders = _headerDictionaryProviders
                 .SelectMany(p => p.GetHeaders())
-                .Aggregate(new HeaderDictionary(),
+                .Aggregate((IHeaderDictionary)new HeaderDictionary(),
                 (dictionary, pair) =>
                 {
                     dictionary.Add(pair);

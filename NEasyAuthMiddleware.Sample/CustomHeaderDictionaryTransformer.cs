@@ -9,7 +9,7 @@ namespace NEasyAuthMiddleware.Sample
     {
         public const string HeaderName = "User-Agent";
 
-        public HeaderDictionary Transform(HeaderDictionary headerDictionary)
+        public IHeaderDictionary Transform(IHeaderDictionary headerDictionary)
         {
             if (!headerDictionary.ContainsKey(HeaderName))
             {
