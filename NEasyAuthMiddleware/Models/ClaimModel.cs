@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace NEasyAuthMiddleware.Models
 {
     public class ClaimModel
     {
-        [JsonProperty("typ")]
+        [JsonPropertyName("typ")]
         public string Type { get; set; }
 
-        [JsonProperty("val")]
+        [JsonPropertyName("val")]
         public string Value { get; set; }
     }
 }

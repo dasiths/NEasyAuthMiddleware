@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace NEasyAuthMiddleware.Models
 {
     public class AuthMeJsonPrincipalModel
     {
-        [JsonProperty("provider_name")]
+        [JsonPropertyName("provider_name")]
         public string AuthenticationType { get; set; }
 
-        [JsonProperty("id_token")]
+        [JsonPropertyName("id_token")]
         public string IdToken { get; set; }
 
-        [JsonProperty("user_id")]
+        [JsonPropertyName("user_id")]
         public string UserId { get; set; }
 
-        [JsonProperty("user_claims")]
+        [JsonPropertyName("user_claims")]
         public ClaimModel[] Claims { get; set; }
     }
 }

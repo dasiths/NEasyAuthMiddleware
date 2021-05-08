@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NEasyAuthMiddleware.Constants;
-using Newtonsoft.Json;
 using NEasyAuthMiddleware.Core;
 using NEasyAuthMiddleware.Models;
 using NEasyAuthMiddleware.Providers;
@@ -36,7 +36,7 @@ namespace NEasyAuthMiddleware.Mappers
                 {
                     var headerValue = headers[KnownEasyAuthHeaders.PrincipalObjectHeader].First();
                     var payload = Encoding.UTF8.GetString(Convert.FromBase64String(headerValue));
-                    var headerPrincipalModel = JsonConvert.DeserializeObject<EasyAuthHeaderPrincipalModel>(payload);
+                    var headerPrincipalModel = JsonSerializer.Deserialize<EasyAuthHeaderPrincipalModel>(payload);
 
                     var config = _easyAuthOptions.Value;
 

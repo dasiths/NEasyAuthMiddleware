@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 using NEasyAuthMiddleware.Constants;
 using NEasyAuthMiddleware.Core;
-using Newtonsoft.Json;
 using NEasyAuthMiddleware.Models;
 
 namespace NEasyAuthMiddleware.Providers
@@ -31,7 +31,7 @@ namespace NEasyAuthMiddleware.Providers
             var contents = File.ReadAllText(_jsonFileHeaderDictionaryProviderOptions.JsonFilePath);
             _logger.LogTrace($"Reading claims in file: {_jsonFileHeaderDictionaryProviderOptions.JsonFilePath}");
 
-            var payload = JsonConvert.DeserializeObject<AuthMeJsonPrincipalModel[]>(contents);
+            var payload = JsonSerializer.Deserialize<AuthMeJsonPrincipalModel[]>(contents);
 
             if (payload.Any())
             {
@@ -43,7 +43,7 @@ namespace NEasyAuthMiddleware.Providers
                     RoleClaimType = ClaimTypes.Role,
                     Claims = target.Claims
                 };
-                var json = JsonConvert.SerializeObject(result);
+                var json = JsonSerializer.Serialize(result);
                 var encodedString = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
                 headerDictionary.Add(new KeyValuePair<string, StringValues>(KnownEasyAuthHeaders.PrincipalObjectHeader, encodedString));
 

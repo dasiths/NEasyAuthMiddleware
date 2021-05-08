@@ -7,6 +7,6 @@ namespace NEasyAuthMiddleware.Core
 {
     public interface IHeaderDictionaryTransformer
     {
-        HeaderDictionary Transform(HeaderDictionary headerDictionary);
+        IHeaderDictionary Transform(IHeaderDictionary headerDictionary);
     }
 }
