@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
-using NEasyAuthMiddleware.Providers;
 
 namespace NEasyAuthMiddleware.Core
 {
@@ -26,8 +24,7 @@ namespace NEasyAuthMiddleware.Core
             IEnumerable<IClaimsTransformer> claimsTransformers,
             IOptionsMonitor<EasyAuthOptions> options,
             ILoggerFactory logger,
-            UrlEncoder encoder,
-            ISystemClock clock) : base(options, logger, encoder, clock)
+            UrlEncoder encoder) : base(options, logger, encoder)
         {
             _claimsTransformers = claimsTransformers.ToList();
             _headerDictionaryTransformers = headerDictionaryTransformers.ToList();
