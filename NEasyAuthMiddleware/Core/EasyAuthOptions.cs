@@ -6,6 +6,7 @@ namespace NEasyAuthMiddleware.Core
 {
     public class EasyAuthOptions : AuthenticationSchemeOptions
     {
+        public string Provider { get; set; } = "aad";
         public IList<string> IgnoreClaimTypes { get; set; } = new List<string>();
         public IList<string> ClaimTypesWithCommaSeparatedValues { get; set; } = new List<string>() { KnownEasyAuthClaimAliases.Roles };
     }

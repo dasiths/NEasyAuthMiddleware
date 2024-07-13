@@ -5,7 +5,14 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEasyAuthMiddleware", "NEasyAuthMiddleware\NEasyAuthMiddleware.csproj", "{9E0305C5-E80F-45A5-A21A-DE5F8EA181A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NEasyAuthMiddleware.Sample", "NEasyAuthMiddleware.Sample\NEasyAuthMiddleware.Sample.csproj", "{FBC0D4C3-7663-4C35-BF0D-DF0492AFA675}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NEasyAuthMiddleware.Sample", "NEasyAuthMiddleware.Sample\NEasyAuthMiddleware.Sample.csproj", "{FBC0D4C3-7663-4C35-BF0D-DF0492AFA675}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFFF8A96-4B9A-4151-A58F-175C948E199C}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
