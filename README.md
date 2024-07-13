@@ -38,7 +38,6 @@ Just add the following to your `Startup.cs`
 ```csharp
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
             services.AddEasyAuth();
 
             if (_hostingEnvironment.IsDevelopment()) // Use the mock json file when not running in an app service
