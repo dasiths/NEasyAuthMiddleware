@@ -15,7 +15,11 @@ dotnet_csproj:
   file_version: '{version}'
   informational_version: '{version}'
 before_build:
-- ps: dotnet restore
+- ps: |
+    Invoke-WebRequest 'https://dot.net/v1/dotnet-install.ps1' -OutFile "dotnet-install.ps1"
+    ./dotnet-install.ps1 -InstallDir "$env:ProgramFiles\dotnet" -Channel 8.0 -Quality GA
+    dotnet --version
+    dotnet restore
 build:
   publish_nuget: true
   verbosity: minimal
