@@ -86,17 +86,19 @@ Azure App Services allows you to configure EasyAuth to allow unauthenticated req
 
 This library supports this scenario. If you've specified `AddAuthorization()` to the service collection, and added `UseAuthorization()` to the middleware pipeline, the library will automatically redirect users to login with EasyAuth on controllers attributed with `[Authorize]`.
 
-By default the library assumes AAD auth, but you can customize the [provider](https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization#identity-providers) using `EasyAuthOptions` when adding the service.
+By default the library assumes AAD/Microsoft Entra auth, but you can customize the [provider](https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization#identity-providers) using `EasyAuthOptions` when adding the service.
 
 ```csharp
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddEasyAuth(options =>
 			{
-				options.Provider = "google"; // Use Google as the auth provider
+				options.Provider = KnownAuthProviders.Google; // Use Google as the auth provider
 			});
 		}
 ```
+
+> NOTE: The library provides a list of known providers in the `NEasyAuthMiddleware.Constants.KnownAuthProviders` static class.
 
 ## Customizing it
 
