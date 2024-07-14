@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NEasyAuthMiddleware.Constants;
 using NEasyAuthMiddleware.Core;
@@ -14,10 +12,7 @@ namespace NEasyAuthMiddleware
     {
         public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme, Action<EasyAuthOptions> configure = null)
         {
-            if (!builder.Services.Any(s => typeof(IHttpContextAccessor).IsAssignableFrom(s.ServiceType)))
-            {
-                builder.Services.AddHttpContextAccessor();
-            }
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<IHeaderDictionaryProvider, HttpContextHeaderDictionaryProvider>();
             builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
 
