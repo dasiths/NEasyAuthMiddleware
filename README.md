@@ -26,6 +26,7 @@ NEasyAuthMiddleware does all of this complicated logic for you and keeps your au
 
 - Version 1.X targets AspNet Core 2.x
 - Version 2.X targets AspNet Core 3.x
+- Version 3.x targets AspNet Core 8.x
 
 Install the package using NuGet Package Manager Console
 
