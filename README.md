@@ -31,7 +31,7 @@ NEasyAuthMiddleware does all of this complicated logic for you and keeps your au
 Install the package using NuGet Package Manager Console
 
 ```
-Install-Package NEasyAuthMiddleware
+dotnet add package NEasyAuthMiddleware
 ```
 
 Just add the following to your `Startup.cs`
