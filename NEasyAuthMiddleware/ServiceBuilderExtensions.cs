@@ -12,6 +12,7 @@ namespace NEasyAuthMiddleware
     {
         public static AuthenticationBuilder AddEasyAuth(this AuthenticationBuilder builder, string authenticationScheme, Action<EasyAuthOptions> configure = null)
         {
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddSingleton<IHeaderDictionaryProvider, HttpContextHeaderDictionaryProvider>();
             builder.Services.AddSingleton<IClaimMapper, StandardPrincipalClaimMapper>();
 
