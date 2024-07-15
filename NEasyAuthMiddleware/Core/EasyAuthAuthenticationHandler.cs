@@ -5,12 +5,13 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace NEasyAuthMiddleware.Core
 {
-    public class EasyAuthAuthenticationHandler : AuthenticationHandler<EasyAuthOptions>
+    public class EasyAuthAuthenticationHandler : SignOutAuthenticationHandler<EasyAuthOptions>
     {
         private readonly IList<IHeaderDictionaryProvider> _headerDictionaryProviders;
         private readonly IList<IClaimMapper> _claimMappers;
@@ -91,6 +92,18 @@ namespace NEasyAuthMiddleware.Core
 
             _logger.LogTrace($"{nameof(EasyAuthAuthenticationHandler)} did not find any successful results.");
             return Task.FromResult(AuthenticateResult.NoResult());
+        }
+
+        protected override Task HandleChallengeAsync(AuthenticationProperties properties) 
+        {
+            Response.Redirect($"/.auth/login/{Options.Provider}?post_login_redirect_uri={Request.GetEncodedPathAndQuery()}");
+            return Task.CompletedTask;
+        }
+
+        protected override Task HandleSignOutAsync(AuthenticationProperties properties)
+        {
+            Response.Redirect("/.auth/logout");
+            return Task.CompletedTask;
         }
     }
 }

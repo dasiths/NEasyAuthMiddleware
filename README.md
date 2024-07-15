@@ -41,6 +41,9 @@ Just add the following to your `Startup.cs`
         {
             services.AddEasyAuth();
 
+            // Add this if you want your app to support [automatic Challenges](#handling-unauthenticated-requests)
+            services.AddAuthorization();
+
             if (_hostingEnvironment.IsDevelopment()) // Use the mock json file when not running in an app service
             {
                 var mockFile = $"{_hostingEnvironment.ContentRootPath}\\mock_user.json";
@@ -53,6 +56,8 @@ Just add the following to your `Startup.cs`
         {
             app.UseAuthentication(); // Indicate we are using the Authenticaiton middleware
             app.UseRouting();
+
+            // Add this if you want your app to support [automatic Challenges](#handling-unauthenticated-requests)
             app.UseAuthorization(); // This has to come between routing and endoints
 
             app.UseEndpoints(endpoints =>
@@ -75,6 +80,23 @@ In your controller, use the `Authorize` attribute as you would with any other au
 ```
 
 See the [sample app](https://github.com/dasiths/NEasyAuthMiddleware/tree/master/NEasyAuthMiddleware.Sample) for more.
+
+## Handling unauthenticated requests
+Azure App Services allows you to configure EasyAuth to allow unauthenticated requests to pass through to your application. This is useful when you want to handle authentication in your application code, or only enable it for certain pages or flows. 
+
+This library supports this scenario. If you've specified `AddAuthorization()` to the service collection, and added `UseAuthorization()` to the middleware pipeline, the library will automatically redirect users to login with EasyAuth on controllers attributed with `[Authorize]`.
+
+By default the library assumes AAD/Microsoft Entra auth, but you can customize the [provider](https://learn.microsoft.com/en-us/azure/app-service/overview-authentication-authorization#identity-providers) using `EasyAuthOptions` when adding the service. The library provides a list of known providers in the `NEasyAuthMiddleware.Constants.KnownAuthProviders` static class.
+
+```csharp
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddEasyAuth(options =>
+			{
+				options.Provider = KnownAuthProviders.Google; // Use Google as the auth provider
+			});
+		}
+```
 
 ## Customizing it
 
