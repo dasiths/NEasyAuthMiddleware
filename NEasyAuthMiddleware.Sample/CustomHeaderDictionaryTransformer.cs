@@ -1,11 +1,9 @@
-﻿using System;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using NEasyAuthMiddleware.Core;
 
 namespace NEasyAuthMiddleware.Sample
 {
-    public class CustomHeaderDictionaryTransformer: IHeaderDictionaryTransformer
+    public class CustomHeaderDictionaryTransformer : IHeaderDictionaryTransformer
     {
         public const string HeaderName = "User-Agent";
 
@@ -14,7 +12,7 @@ namespace NEasyAuthMiddleware.Sample
             if (!headerDictionary.ContainsKey(HeaderName))
             {
                 // adding default value
-                headerDictionary.Add(HeaderName, "Google Chrome on Windows");
+                headerDictionary.Append(HeaderName, "Google Chrome on Windows");
             }
 
             return headerDictionary;
